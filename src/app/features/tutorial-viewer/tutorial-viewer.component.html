@@ -1,0 +1,137 @@
+<div class="tutorial-viewer-container">
+  <div *ngIf="loading" class="loading">
+    <div class="spinner"></div>
+    <p>Loading tutorial...</p>
+  </div>
+
+  <div *ngIf="error" class="error-message">
+    <h2>Error</h2>
+    <p>{{ error }}</p>
+    <a routerLink="/tutorials" class="back-link">← Back to Tutorials</a>
+  </div>
+
+  <div *ngIf="tutorial && !loading && !error" class="tutorial-content">
+    <!-- Tutorial Header -->
+    <div class="tutorial-header">
+      <a routerLink="/tutorials" class="back-link">← Back to Tutorials</a>
+      <h1>{{ tutorial.title }}</h1>
+      <p class="tutorial-description">{{ tutorial.description }}</p>
+
+      <div class="tutorial-info">
+        <span class="info-badge">{{ tutorial.category }}</span>
+        <span class="info-badge">{{ tutorial.difficulty }}</span>
+        <span class="info-badge">⏱️ {{ tutorial.estimatedTime }} min</span>
+      </div>
+
+      <!-- Progress Bar -->
+      <div class="progress-container">
+        <div class="progress-bar">
+          <div class="progress-fill" [style.width.%]="getSectionProgress()"></div>
+        </div>
+        <span class="progress-text">
+          Section {{ currentSectionIndex + 1 }} of {{ tutorial.sections.length }}
+          ({{ getSectionProgress() }}%)
+        </span>
+      </div>
+    </div>
+
+    <!-- Sidebar Navigation -->
+    <div class="tutorial-layout">
+      <aside class="sidebar">
+        <h3>Sections</h3>
+        <nav class="section-nav">
+          <button
+            *ngFor="let section of tutorial.sections; let i = index"
+            (click)="goToSection(i)"
+            class="section-link"
+            [class.active]="i === currentSectionIndex"
+            [class.completed]="i < currentSectionIndex"
+          >
+            <span class="section-number">{{ i + 1 }}</span>
+            <span class="section-title">{{ section.title }}</span>
+            <span *ngIf="i < currentSectionIndex" class="check-mark">✓</span>
+          </button>
+        </nav>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="main-content">
+        <div *ngIf="currentSection" class="section-content">
+          <h2>{{ currentSection.title }}</h2>
+
+          <div class="content-text" [innerHTML]="formatContent(currentSection.content)"></div>
+
+          <!-- Code Example -->
+          <div *ngIf="currentSection.codeExample" class="code-example">
+            <div class="code-header">
+              <span class="code-language">{{ currentSection.codeExample.language }}</span>
+              <button (click)="copyCode(currentSection.codeExample.code)" class="copy-btn">
+                📋 Copy
+              </button>
+            </div>
+            <pre class="code-block"><code>{{ currentSection.codeExample.code }}</code></pre>
+            <p *ngIf="currentSection.codeExample.description" class="code-description">
+              {{ currentSection.codeExample.description }}
+            </p>
+          </div>
+
+          <!-- Exercise Section -->
+          <div *ngIf="currentSection.exercise" class="exercise-section">
+            <h3>💡 Try It Yourself</h3>
+            <p>{{ currentSection.exercise.question }}</p>
+
+            <div class="exercise-code">
+              <div class="code-header">
+                <span>Your Code</span>
+              </div>
+              <pre class="code-block"><code>{{ currentSection.exercise.initialCode }}</code></pre>
+            </div>
+
+            <div *ngIf="currentSection.exercise.hints && currentSection.exercise.hints.length > 0" class="hints">
+              <details>
+                <summary>💡 Need a hint?</summary>
+                <ul>
+                  <li *ngFor="let hint of currentSection.exercise.hints">{{ hint }}</li>
+                </ul>
+              </details>
+            </div>
+
+            <div class="solution">
+              <details>
+                <summary>👁️ Show Solution</summary>
+                <pre class="code-block"><code>{{ currentSection.exercise.solution }}</code></pre>
+              </details>
+            </div>
+          </div>
+
+          <!-- Navigation Buttons -->
+          <div class="section-navigation">
+            <button
+              *ngIf="hasPreviousSection()"
+              (click)="previousSection()"
+              class="nav-btn prev-btn"
+            >
+              ← Previous
+            </button>
+
+            <button
+              *ngIf="hasNextSection()"
+              (click)="nextSection()"
+              class="nav-btn next-btn"
+            >
+              Next →
+            </button>
+
+            <button
+              *ngIf="!hasNextSection()"
+              (click)="completeTutorial()"
+              class="nav-btn complete-btn"
+            >
+              ✓ Complete Tutorial
+            </button>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+</div>
