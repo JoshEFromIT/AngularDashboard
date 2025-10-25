@@ -1,0 +1,128 @@
+<div class="progress-container">
+  <header class="progress-header">
+    <h1>Your Learning Progress</h1>
+    <p>Track your journey through Angular mastery</p>
+  </header>
+
+  <div class="stats-grid">
+    <!-- Completion Stats -->
+    <div class="stat-card">
+      <div class="stat-icon">🎯</div>
+      <div class="stat-content">
+        <h3>Completion</h3>
+        <div class="stat-value">{{ getCompletionPercentage() }}%</div>
+        <p class="stat-detail">
+          {{ completedTutorials.length }} of {{ allTutorials.length }} tutorials
+        </p>
+      </div>
+    </div>
+
+    <!-- Time Spent -->
+    <div class="stat-card">
+      <div class="stat-icon">⏱️</div>
+      <div class="stat-content">
+        <h3>Time Spent</h3>
+        <div class="stat-value">{{ formatTime(progress.totalTimeSpent || 0) }}</div>
+        <p class="stat-detail">Total learning time</p>
+      </div>
+    </div>
+
+    <!-- Last Activity -->
+    <div class="stat-card">
+      <div class="stat-icon">📅</div>
+      <div class="stat-content">
+        <h3>Last Activity</h3>
+        <div class="stat-value-small">{{ getLastAccessedText() }}</div>
+        <p class="stat-detail">Keep the momentum going!</p>
+      </div>
+    </div>
+
+    <!-- Estimated Time -->
+    <div class="stat-card">
+      <div class="stat-icon">📊</div>
+      <div class="stat-content">
+        <h3>Progress</h3>
+        <div class="stat-value-small">
+          {{ formatTime(getCompletedTime()) }} / {{ formatTime(getTotalEstimatedTime()) }}
+        </div>
+        <p class="stat-detail">Estimated time completed</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Overall Progress Bar -->
+  <div class="overall-progress">
+    <h2>Overall Progress</h2>
+    <div class="progress-bar-large">
+      <div
+        class="progress-fill-large"
+        [style.width.%]="getCompletionPercentage()"
+      >
+        <span class="progress-label">{{ getCompletionPercentage() }}%</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Current Tutorial -->
+  <div *ngIf="inProgressTutorial" class="current-tutorial">
+    <h2>Continue Learning</h2>
+    <div class="tutorial-card-progress">
+      <div class="tutorial-info-section">
+        <h3>{{ inProgressTutorial.title }}</h3>
+        <p>{{ inProgressTutorial.description }}</p>
+        <div class="tutorial-badges">
+          <span class="badge">{{ inProgressTutorial.category }}</span>
+          <span class="badge">{{ inProgressTutorial.difficulty }}</span>
+        </div>
+      </div>
+      <a [routerLink]="['/tutorial', inProgressTutorial.id]" class="continue-btn-large">
+        Continue Tutorial →
+      </a>
+    </div>
+  </div>
+
+  <!-- Completed Tutorials -->
+  <div class="completed-section">
+    <h2>Completed Tutorials ({{ completedTutorials.length }})</h2>
+
+    <div *ngIf="completedTutorials.length === 0" class="empty-state">
+      <div class="empty-icon">📚</div>
+      <p>No tutorials completed yet</p>
+      <a routerLink="/tutorials" class="start-learning-btn">Start Learning</a>
+    </div>
+
+    <div class="completed-grid">
+      <div *ngFor="let tutorial of completedTutorials" class="completed-card">
+        <div class="completed-badge">✓</div>
+        <h3>{{ tutorial.title }}</h3>
+        <p>{{ tutorial.description }}</p>
+        <div class="tutorial-meta-small">
+          <span>{{ tutorial.category }}</span>
+          <span>{{ tutorial.estimatedTime }} min</span>
+        </div>
+        <a [routerLink]="['/tutorial', tutorial.id]" class="review-link">
+          Review Tutorial
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Actions -->
+  <div class="actions-section">
+    <h2>Manage Progress</h2>
+    <div class="action-buttons">
+      <button (click)="exportProgress()" class="action-btn export-btn">
+        📥 Export Progress
+      </button>
+      <button (click)="importProgress()" class="action-btn import-btn">
+        📤 Import Progress
+      </button>
+      <button (click)="resetProgress()" class="action-btn reset-btn">
+        🔄 Reset Progress
+      </button>
+    </div>
+    <p class="action-note">
+      Export your progress to backup or transfer to another device. Reset will clear all progress.
+    </p>
+  </div>
+</div>

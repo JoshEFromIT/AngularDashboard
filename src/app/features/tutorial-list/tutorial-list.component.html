@@ -1,0 +1,118 @@
+<div class="tutorial-list-container">
+  <header class="tutorial-header">
+    <h1>Angular Learning Tutorials</h1>
+    <p>Master Angular step by step with interactive tutorials</p>
+  </header>
+
+  <div class="filters">
+    <div class="search-box">
+      <input
+        type="text"
+        [(ngModel)]="searchQuery"
+        (ngModelChange)="onSearchChange()"
+        placeholder="Search tutorials..."
+        class="search-input"
+      />
+    </div>
+
+    <div class="filter-controls">
+      <div class="filter-group">
+        <label for="category">Category:</label>
+        <select
+          id="category"
+          [(ngModel)]="selectedCategory"
+          (ngModelChange)="onCategoryChange()"
+          class="filter-select"
+        >
+          <option value="all">All Categories</option>
+          <option *ngFor="let category of categories" [value]="category">
+            {{ category }}
+          </option>
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <label for="difficulty">Difficulty:</label>
+        <select
+          id="difficulty"
+          [(ngModel)]="selectedDifficulty"
+          (ngModelChange)="onDifficultyChange()"
+          class="filter-select"
+        >
+          <option value="all">All Levels</option>
+          <option *ngFor="let difficulty of difficulties" [value]="difficulty">
+            {{ difficulty }}
+          </option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="tutorials-grid">
+    <div
+      *ngFor="let tutorial of filteredTutorials"
+      class="tutorial-card"
+      [class.completed]="isTutorialCompleted(tutorial.id)"
+    >
+      <div class="tutorial-card-header">
+        <h2>{{ tutorial.title }}</h2>
+        <span
+          class="difficulty-badge"
+          [ngClass]="getDifficultyClass(tutorial.difficulty)"
+        >
+          {{ tutorial.difficulty }}
+        </span>
+      </div>
+
+      <p class="tutorial-description">{{ tutorial.description }}</p>
+
+      <div class="tutorial-meta">
+        <span class="meta-item">
+          <span class="icon">📚</span>
+          {{ tutorial.category }}
+        </span>
+        <span class="meta-item">
+          <span class="icon">⏱️</span>
+          {{ tutorial.estimatedTime }} min
+        </span>
+        <span class="meta-item">
+          <span class="icon">📖</span>
+          {{ tutorial.sections.length }} sections
+        </span>
+      </div>
+
+      <div *ngIf="tutorial.prerequisites && tutorial.prerequisites.length > 0" class="prerequisites">
+        <strong>Prerequisites:</strong>
+        <ul>
+          <li *ngFor="let prereq of tutorial.prerequisites">{{ prereq }}</li>
+        </ul>
+      </div>
+
+      <div class="tutorial-footer">
+        <div class="progress-bar" *ngIf="getTutorialProgress(tutorial) > 0">
+          <div
+            class="progress-fill"
+            [style.width.%]="getTutorialProgress(tutorial)"
+          ></div>
+        </div>
+
+        <a
+          [routerLink]="['/tutorial', tutorial.id]"
+          class="start-btn"
+          [class.continue-btn]="getTutorialProgress(tutorial) > 0 && getTutorialProgress(tutorial) < 100"
+        >
+          <span *ngIf="getTutorialProgress(tutorial) === 0">Start Tutorial</span>
+          <span *ngIf="getTutorialProgress(tutorial) > 0 && getTutorialProgress(tutorial) < 100">Continue</span>
+          <span *ngIf="getTutorialProgress(tutorial) === 100">✓ Review</span>
+        </a>
+      </div>
+    </div>
+
+    <div *ngIf="filteredTutorials.length === 0" class="no-results">
+      <p>No tutorials found matching your criteria.</p>
+      <button (click)="selectedCategory = 'all'; selectedDifficulty = 'all'; searchQuery = ''; applyFilters()" class="reset-btn">
+        Reset Filters
+      </button>
+    </div>
+  </div>
+</div>

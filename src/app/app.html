@@ -1,0 +1,39 @@
+<div class="app-container">
+  <header class="app-header">
+    <nav class="navbar">
+      <div class="nav-brand">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 250 250"
+          class="logo"
+        >
+          <path fill="#DD0031" d="M125,30L31.9,63.2l14.2,123.1L125,230l78.9-43.7l14.2-123.1L125,30z"/>
+          <path fill="#C3002F" d="M125,30v22.2l-0.1,0.1V230l78.9-43.7l14.2-123.1L125,30z"/>
+          <path fill="#FFFFFF" d="M125,52.1L66.8,182.6h21.7l11.7-29.2h49.4l11.7,29.2H183L125,52.1z M142,135.4H108l17-40.9L142,135.4z"/>
+        </svg>
+        <a routerLink="/" class="brand-text">Angular Learning Tool</a>
+      </div>
+
+      <ul class="nav-links">
+        <li>
+          <a routerLink="/tutorials" routerLinkActive="active" class="nav-link">
+            Tutorials
+          </a>
+        </li>
+        <li>
+          <a routerLink="/progress" routerLinkActive="active" class="nav-link">
+            Progress
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="app-main">
+    <router-outlet />
+  </main>
+
+  <footer class="app-footer">
+    <p>&copy; 2024 Angular Learning Tool. Built with Angular {{ title }}</p>
+  </footer>
+</div>

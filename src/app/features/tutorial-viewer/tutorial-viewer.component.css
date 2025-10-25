@@ -1,0 +1,379 @@
+.tutorial-viewer-container {
+  min-height: 100vh;
+  background: #f5f5f5;
+}
+
+.loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  color: #666;
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #dd0031;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.error-message {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: white;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.back-link {
+  display: inline-block;
+  color: #dd0031;
+  text-decoration: none;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.back-link:hover {
+  text-decoration: underline;
+}
+
+.tutorial-header {
+  background: white;
+  padding: 2rem;
+  border-bottom: 2px solid #e0e0e0;
+}
+
+.tutorial-header h1 {
+  font-size: 2.5rem;
+  color: #333;
+  margin: 1rem 0;
+}
+
+.tutorial-description {
+  font-size: 1.1rem;
+  color: #666;
+  margin-bottom: 1rem;
+}
+
+.tutorial-info {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+}
+
+.info-badge {
+  padding: 0.5rem 1rem;
+  background: #f0f0f0;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.progress-container {
+  margin-top: 1.5rem;
+}
+
+.progress-bar {
+  height: 8px;
+  background: #e0e0e0;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 0.5rem;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #dd0031, #ff4458);
+  transition: width 0.3s ease;
+}
+
+.progress-text {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.tutorial-layout {
+  display: flex;
+  max-width: 1400px;
+  margin: 0 auto;
+  gap: 2rem;
+  padding: 2rem;
+}
+
+.sidebar {
+  flex: 0 0 280px;
+  background: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  height: fit-content;
+  position: sticky;
+  top: 2rem;
+}
+
+.sidebar h3 {
+  margin-top: 0;
+  color: #333;
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+.section-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.section-link {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  background: #f5f5f5;
+  border: 2px solid transparent;
+  border-radius: 6px;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 0.95rem;
+}
+
+.section-link:hover {
+  background: #e8e8e8;
+}
+
+.section-link.active {
+  background: #fff;
+  border-color: #dd0031;
+  color: #dd0031;
+  font-weight: 600;
+}
+
+.section-link.completed {
+  background: #f1f8f4;
+}
+
+.section-number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  background: #ddd;
+  border-radius: 50%;
+  font-weight: 600;
+  font-size: 0.9rem;
+  flex-shrink: 0;
+}
+
+.section-link.active .section-number {
+  background: #dd0031;
+  color: white;
+}
+
+.section-link.completed .section-number {
+  background: #4caf50;
+  color: white;
+}
+
+.section-title {
+  flex: 1;
+}
+
+.check-mark {
+  color: #4caf50;
+  font-weight: bold;
+}
+
+.main-content {
+  flex: 1;
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+}
+
+.section-content h2 {
+  color: #333;
+  font-size: 2rem;
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+}
+
+.content-text {
+  line-height: 1.8;
+  color: #444;
+  margin-bottom: 2rem;
+  font-size: 1.1rem;
+}
+
+.code-example {
+  margin: 2rem 0;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.code-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #2d2d2d;
+  color: white;
+  padding: 0.75rem 1rem;
+}
+
+.code-language {
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+}
+
+.copy-btn {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  padding: 0.4rem 0.8rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background 0.2s;
+}
+
+.copy-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.code-block {
+  margin: 0;
+  padding: 1.5rem;
+  background: #1e1e1e;
+  color: #d4d4d4;
+  overflow-x: auto;
+  font-family: 'Courier New', monospace;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.code-block code {
+  white-space: pre;
+}
+
+.code-description {
+  padding: 1rem;
+  background: #f8f8f8;
+  border-top: 1px solid #e0e0e0;
+  margin: 0;
+  font-style: italic;
+  color: #666;
+}
+
+.exercise-section {
+  background: #fff8e1;
+  border: 2px solid #ffecb3;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin: 2rem 0;
+}
+
+.exercise-section h3 {
+  margin-top: 0;
+  color: #f57c00;
+}
+
+.exercise-code {
+  margin: 1rem 0;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.hints, .solution {
+  margin-top: 1rem;
+}
+
+.hints details, .solution details {
+  background: white;
+  padding: 1rem;
+  border-radius: 4px;
+  border: 1px solid #e0e0e0;
+}
+
+.hints summary, .solution summary {
+  cursor: pointer;
+  font-weight: 600;
+  color: #dd0031;
+}
+
+.hints ul {
+  margin-top: 0.5rem;
+  padding-left: 1.5rem;
+}
+
+.section-navigation {
+  display: flex;
+  gap: 1rem;
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 2px solid #e0e0e0;
+}
+
+.nav-btn {
+  padding: 0.75rem 2rem;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.prev-btn {
+  background: #f5f5f5;
+  color: #333;
+}
+
+.prev-btn:hover {
+  background: #e0e0e0;
+}
+
+.next-btn {
+  background: #dd0031;
+  color: white;
+  margin-left: auto;
+}
+
+.next-btn:hover {
+  background: #c50028;
+}
+
+.complete-btn {
+  background: #4caf50;
+  color: white;
+  margin-left: auto;
+}
+
+.complete-btn:hover {
+  background: #45a049;
+}
+
+@media (max-width: 968px) {
+  .tutorial-layout {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    position: static;
+    flex: none;
+    width: 100%;
+  }
+}
