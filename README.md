@@ -4,12 +4,14 @@ An interactive Angular front-end training application that helps you learn Angul
 
 ## Features
 
-- Interactive tutorials covering Angular concepts from beginner to advanced
-- Live code examples and demonstrations
-- Hands-on coding exercises with instant feedback
-- Progress tracking to monitor your learning journey
-- Real-time tutorial content fetched from online resources
-- Modern, responsive UI for learning on any device
+- **10+ Comprehensive Tutorials** covering Angular concepts from beginner to advanced
+- **3 Real-World Projects** (Todo App, Weather Dashboard, E-Commerce)
+- **UI Design Tutorials** (Angular Material, CSS Grid/Flexbox, Animations)
+- **Live Code Examples** with syntax highlighting and copy-to-clipboard
+- **Hands-on Exercises** with solutions and hints
+- **Progress Tracking** to monitor your learning journey with localStorage persistence
+- **Filtering & Search** to find tutorials by category, difficulty, and keywords
+- **Modern, Responsive UI** for learning on any device
 
 ## Getting Started
 
@@ -63,12 +65,34 @@ The build artifacts will be stored in the `dist/` directory.
 
 The tool covers the following Angular topics:
 
+### Core Concepts
 1. **Basics**: Components, Templates, Data Binding
-2. **Advanced**: Services, Dependency Injection, RxJS
+2. **Services**: Dependency Injection, Service Architecture
 3. **Routing**: Navigation, Guards, Lazy Loading
-4. **Forms**: Template-driven and Reactive Forms
-5. **HTTP**: API calls, Interceptors, Error Handling
-6. **State Management**: Signals, Services, State Patterns
+4. **HTTP**: API calls, Interceptors, Error Handling
+5. **State Management**: Signals, Services, State Patterns
+
+### UI Design & Styling
+6. **Angular Material**: Component library, themes, form controls
+7. **Responsive Design**: CSS Grid, Flexbox, mobile-first approach
+8. **Animations**: Angular animation system, transitions, complex effects
+
+### Hands-On Projects
+
+#### Beginner Projects
+- **Todo List Application** (120 min)
+  - CRUD operations, filtering, localStorage
+  - Practice: Component communication, forms, event handling
+
+#### Intermediate Projects
+- **Weather Dashboard** (150 min)
+  - Real-time API integration, geolocation
+  - Practice: HTTP requests, RxJS operators, error handling
+
+#### Advanced Projects
+- **E-Commerce Product Catalog** (240 min)
+  - Shopping cart, filters, checkout process
+  - Practice: State management, routing, guards, custom pipes
 
 ## Additional Resources
 

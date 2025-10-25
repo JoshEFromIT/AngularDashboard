@@ -49,6 +49,8 @@ export enum TutorialCategory {
   FORMS = 'Forms',
   HTTP = 'HTTP',
   STATE_MANAGEMENT = 'State Management',
+  UI_DESIGN = 'UI Design',
+  PROJECTS = 'Projects',
   ADVANCED = 'Advanced'
 }
 
