@@ -118,21 +118,42 @@
         </ul>
       </div>
 
-      <div class="code-editor">
-        <div class="code-header">
-          <span>Your Code</span>
-          <div class="code-actions">
-            <button (click)="copyCode(userCode)" class="icon-btn">📋 Copy</button>
-            <button (click)="toggleHints()" class="icon-btn">💡 Hints</button>
-            <button (click)="toggleSolution()" class="icon-btn">👁️ Solution</button>
+      <!-- Interactive Code Editor -->
+      <div class="editor-controls">
+        <button (click)="toggleHints()" class="control-btn">💡 {{ showHints ? 'Hide' : 'Show' }} Hints</button>
+        <button (click)="toggleSolution()" class="control-btn warning-btn">👁️ {{ showSolution ? 'Hide' : 'View' }} Solution</button>
+        <button (click)="copyCode(userCode)" class="control-btn">📋 Copy Code</button>
+      </div>
+
+      <app-code-editor
+        [starterCode]="exercise.codingChallenge.starterCode"
+        [language]="'typescript'"
+        [height]="'500px'"
+        (codeChange)="onCodeChange($event)"
+        (codeRun)="onRunCode($event)"
+        (codeSubmit)="onSubmitCode($event)"
+      ></app-code-editor>
+
+      <!-- Test Output -->
+      <div *ngIf="codeOutput" class="code-output">
+        <h3>Output</h3>
+        <pre class="output-text">{{ codeOutput }}</pre>
+      </div>
+
+      <!-- Test Results -->
+      <div *ngIf="testResults.length > 0" class="test-results">
+        <h3>Test Results</h3>
+        <div *ngFor="let result of testResults" class="test-result" [class.passed]="result.passed">
+          <div class="test-result-header">
+            <span class="test-status">{{ result.passed ? '✓' : '✗' }}</span>
+            <span class="test-description">{{ result.testCase.description }}</span>
+          </div>
+          <div class="test-details">
+            <p><strong>Input:</strong> {{ result.testCase.input }}</p>
+            <p><strong>Expected:</strong> {{ result.testCase.expectedOutput }}</p>
+            <p *ngIf="result.output"><strong>Result:</strong> {{ result.output }}</p>
           </div>
         </div>
-        <textarea
-          [(ngModel)]="userCode"
-          class="code-textarea"
-          rows="20"
-          spellcheck="false"
-        ></textarea>
       </div>
 
       <div *ngIf="showHints && exercise.codingChallenge.hints" class="hints-section">
@@ -144,20 +165,20 @@
 
       <div *ngIf="showSolution" class="solution-section">
         <h3>👁️ Solution</h3>
+        <div class="solution-warning">
+          <p>⚠️ Viewing the solution will help you understand the approach, but try to solve it yourself first!</p>
+        </div>
         <pre class="code-block"><code>{{ exercise.codingChallenge.solution }}</code></pre>
       </div>
 
-      <div class="test-cases" *ngIf="exercise.codingChallenge.testCases">
-        <h3>Test Cases</h3>
+      <div class="test-cases-reference" *ngIf="exercise.codingChallenge.testCases && !testResults.length">
+        <h3>Test Cases to Pass</h3>
+        <p class="test-hint">Click "Run Code" to test your implementation against these test cases.</p>
         <div *ngFor="let testCase of exercise.codingChallenge.testCases" class="test-case">
           <p class="test-description">{{ testCase.description }}</p>
           <p><strong>Input:</strong> {{ testCase.input }}</p>
           <p><strong>Expected:</strong> {{ testCase.expectedOutput }}</p>
         </div>
-      </div>
-
-      <div class="challenge-actions">
-        <button (click)="submitCode()" class="submit-btn">Submit Code</button>
       </div>
     </div>
 

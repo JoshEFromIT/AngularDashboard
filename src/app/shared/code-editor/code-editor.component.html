@@ -1,0 +1,27 @@
+<div class="code-editor-container">
+  <div class="editor-header">
+    <h3>Code Editor</h3>
+    <div class="editor-actions" *ngIf="showActions">
+      <button class="action-btn reset-btn" (click)="resetCode()" title="Reset to starter code">
+        Reset
+      </button>
+    </div>
+  </div>
+
+  <div class="editor-wrapper" [style.height]="height">
+    <ngx-monaco-editor
+      [(ngModel)]="code"
+      [options]="editorOptions"
+      (ngModelChange)="onCodeChange($event)"
+    ></ngx-monaco-editor>
+  </div>
+
+  <div class="editor-footer" *ngIf="showActions">
+    <button class="action-btn run-btn" (click)="onRunCode()">
+      Run Code
+    </button>
+    <button class="action-btn submit-btn" (click)="onSubmitCode()">
+      Submit Solution
+    </button>
+  </div>
+</div>

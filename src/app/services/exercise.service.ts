@@ -1050,6 +1050,868 @@ export class AppStore extends Store<AppState> {
             }
           ]
         }
+      },
+      // ADDITIONAL QUIZZES
+      {
+        id: 'quiz-forms',
+        title: 'Angular Forms Mastery Quiz',
+        description: 'Test your knowledge of template-driven and reactive forms in Angular.',
+        difficulty: DifficultyLevel.INTERMEDIATE,
+        estimatedTime: 20,
+        category: ExerciseCategory.FORMS,
+        type: ExerciseType.QUIZ,
+        prerequisites: ['data-binding'],
+        quiz: {
+          passingScore: 70,
+          questions: [
+            {
+              id: 'q1',
+              question: 'Which module is required for template-driven forms?',
+              type: QuestionType.MULTIPLE_CHOICE,
+              options: ['FormsModule', 'ReactiveFormsModule', 'CommonModule', 'BrowserModule'],
+              correctAnswer: 'FormsModule',
+              explanation: 'FormsModule is required for template-driven forms. It provides directives like ngModel.'
+            },
+            {
+              id: 'q2',
+              question: 'Which class is used to build reactive forms?',
+              type: QuestionType.MULTIPLE_CHOICE,
+              options: ['FormBuilder', 'FormCreator', 'FormMaker', 'FormGenerator'],
+              correctAnswer: 'FormBuilder',
+              explanation: 'FormBuilder is a service that provides convenient methods for creating FormGroup and FormControl instances.'
+            },
+            {
+              id: 'q3',
+              question: 'What is the correct syntax for two-way binding with ngModel?',
+              type: QuestionType.MULTIPLE_CHOICE,
+              options: ['[ngModel]', '(ngModel)', '[(ngModel)]', '{{ngModel}}'],
+              correctAnswer: '[(ngModel)]',
+              explanation: 'Two-way binding uses [(ngModel)] which combines property binding [] and event binding ().'
+            },
+            {
+              id: 'q4',
+              question: 'Reactive forms are more scalable than template-driven forms.',
+              type: QuestionType.TRUE_FALSE,
+              options: ['True', 'False'],
+              correctAnswer: 'True',
+              explanation: 'Reactive forms are more scalable, easier to test, and provide better control over form validation and state.'
+            },
+            {
+              id: 'q5',
+              question: 'Which validator checks if a field is required?',
+              type: QuestionType.MULTIPLE_CHOICE,
+              options: ['Validators.required', 'Validators.mandatory', 'Validators.notEmpty', 'Validators.filled'],
+              correctAnswer: 'Validators.required',
+              explanation: 'Validators.required is the built-in validator that ensures a form control has a value.'
+            }
+          ]
+        }
+      },
+      {
+        id: 'quiz-routing',
+        title: 'Angular Routing Deep Dive Quiz',
+        description: 'Master Angular Router concepts including guards, resolvers, and lazy loading.',
+        difficulty: DifficultyLevel.INTERMEDIATE,
+        estimatedTime: 25,
+        category: ExerciseCategory.ROUTING,
+        type: ExerciseType.QUIZ,
+        prerequisites: ['routing-basics'],
+        quiz: {
+          passingScore: 75,
+          questions: [
+            {
+              id: 'q1',
+              question: 'Which guard prevents navigation to a route?',
+              type: QuestionType.MULTIPLE_CHOICE,
+              options: ['CanActivate', 'CanDeactivate', 'CanLoad', 'Resolve'],
+              correctAnswer: 'CanActivate',
+              explanation: 'CanActivate guard determines if a route can be activated, typically used for authentication.'
+            },
+            {
+              id: 'q2',
+              question: 'What is the purpose of a Resolver?',
+              type: QuestionType.MULTIPLE_CHOICE,
+              options: [
+                'To pre-fetch data before navigating to a route',
+                'To prevent navigation',
+                'To handle errors',
+                'To lazy load modules'
+              ],
+              correctAnswer: 'To pre-fetch data before navigating to a route',
+              explanation: 'Resolvers pre-fetch data before the route is activated, ensuring data is available when the component loads.'
+            },
+            {
+              id: 'q3',
+              question: 'How do you pass parameters in a route?',
+              type: QuestionType.MULTIPLE_CHOICE,
+              options: [
+                'Using :paramName in the path',
+                'Using ?paramName in the path',
+                'Using #paramName in the path',
+                'Using &paramName in the path'
+              ],
+              correctAnswer: 'Using :paramName in the path',
+              explanation: 'Route parameters are defined using colon notation like /user/:id in the route configuration.'
+            },
+            {
+              id: 'q4',
+              question: 'Lazy loading reduces the initial bundle size.',
+              type: QuestionType.TRUE_FALSE,
+              options: ['True', 'False'],
+              correctAnswer: 'True',
+              explanation: 'Lazy loading loads feature modules on demand, reducing the initial bundle size and improving load time.'
+            },
+            {
+              id: 'q5',
+              question: 'Which directive displays the routed component?',
+              type: QuestionType.MULTIPLE_CHOICE,
+              options: ['<router-outlet>', '<router-view>', '<route-display>', '<router-component>'],
+              correctAnswer: '<router-outlet>',
+              explanation: '<router-outlet> is the directive that acts as a placeholder for the routed component.'
+            },
+            {
+              id: 'q6',
+              question: 'What does CanDeactivate guard do?',
+              type: QuestionType.MULTIPLE_CHOICE,
+              options: [
+                'Prevents leaving a route',
+                'Prevents entering a route',
+                'Loads data before navigation',
+                'Handles route errors'
+              ],
+              correctAnswer: 'Prevents leaving a route',
+              explanation: 'CanDeactivate guard prevents navigation away from a route, useful for warning about unsaved changes.'
+            }
+          ]
+        }
+      },
+      {
+        id: 'quiz-http',
+        title: 'HTTP & API Integration Quiz',
+        description: 'Test your understanding of HttpClient, interceptors, and error handling.',
+        difficulty: DifficultyLevel.INTERMEDIATE,
+        estimatedTime: 20,
+        category: ExerciseCategory.HTTP,
+        type: ExerciseType.QUIZ,
+        prerequisites: ['http-client'],
+        quiz: {
+          passingScore: 70,
+          questions: [
+            {
+              id: 'q1',
+              question: 'Which RxJS operator transforms HTTP response data?',
+              type: QuestionType.MULTIPLE_CHOICE,
+              options: ['map', 'filter', 'reduce', 'scan'],
+              correctAnswer: 'map',
+              explanation: 'The map operator transforms emitted values, commonly used to transform HTTP response data.'
+            },
+            {
+              id: 'q2',
+              question: 'What is an HTTP interceptor used for?',
+              type: QuestionType.MULTIPLE_CHOICE,
+              options: [
+                'To intercept and modify HTTP requests/responses',
+                'To create HTTP requests',
+                'To cancel HTTP requests',
+                'To cache HTTP responses'
+              ],
+              correctAnswer: 'To intercept and modify HTTP requests/responses',
+              explanation: 'Interceptors intercept HTTP requests and responses, allowing you to add headers, handle errors, etc.'
+            },
+            {
+              id: 'q3',
+              question: 'Which operator handles HTTP errors?',
+              type: QuestionType.MULTIPLE_CHOICE,
+              options: ['catchError', 'handleError', 'onError', 'errorHandler'],
+              correctAnswer: 'catchError',
+              explanation: 'catchError is the RxJS operator used to handle errors in observable streams, including HTTP errors.'
+            },
+            {
+              id: 'q4',
+              question: 'HttpClient methods return Observables.',
+              type: QuestionType.TRUE_FALSE,
+              options: ['True', 'False'],
+              correctAnswer: 'True',
+              explanation: 'All HttpClient methods return Observables, which are lazy and must be subscribed to.'
+            },
+            {
+              id: 'q5',
+              question: 'How do you add headers to an HTTP request?',
+              type: QuestionType.MULTIPLE_CHOICE,
+              options: [
+                'Using HttpHeaders class',
+                'Using headers array',
+                'Using setHeader method',
+                'Using addHeader function'
+              ],
+              correctAnswer: 'Using HttpHeaders class',
+              explanation: 'HttpHeaders class is used to create and manage HTTP headers for requests.'
+            }
+          ]
+        }
+      },
+      // ADDITIONAL CODING CHALLENGES
+      {
+        id: 'challenge-pipe-creation',
+        title: 'Create Custom Pipes',
+        description: 'Build custom pipes for data transformation in Angular templates.',
+        difficulty: DifficultyLevel.BEGINNER,
+        estimatedTime: 30,
+        category: ExerciseCategory.COMPONENTS,
+        type: ExerciseType.CODING_CHALLENGE,
+        codingChallenge: {
+          id: 'cc-pipes',
+          prompt: `Create two custom pipes:
+
+1. TruncatePipe: Truncates text to a specified length and adds "..."
+   Usage: {{ longText | truncate:10 }}
+
+2. TimeAgoPipe: Converts a date to relative time (e.g., "2 hours ago")
+   Usage: {{ date | timeAgo }}
+
+Requirements:
+- Implement the PipeTransform interface
+- Handle edge cases (null, undefined)
+- Make pipes pure for better performance
+- Add proper TypeScript types`,
+          starterCode: `import { Pipe, PipeTransform } from '@angular/core';
+
+@Pipe({
+  name: 'truncate',
+  standalone: true
+})
+export class TruncatePipe implements PipeTransform {
+  transform(value: string, limit: number = 20): string {
+    // Implement truncate logic
+    return value;
+  }
+}
+
+@Pipe({
+  name: 'timeAgo',
+  standalone: true
+})
+export class TimeAgoPipe implements PipeTransform {
+  transform(value: Date | string): string {
+    // Implement time ago logic
+    return '';
+  }
+}`,
+          solution: `import { Pipe, PipeTransform } from '@angular/core';
+
+@Pipe({
+  name: 'truncate',
+  standalone: true
+})
+export class TruncatePipe implements PipeTransform {
+  transform(value: string, limit: number = 20): string {
+    if (!value) return '';
+    if (value.length <= limit) return value;
+    return value.substring(0, limit) + '...';
+  }
+}
+
+@Pipe({
+  name: 'timeAgo',
+  standalone: true
+})
+export class TimeAgoPipe implements PipeTransform {
+  transform(value: Date | string): string {
+    if (!value) return '';
+
+    const date = value instanceof Date ? value : new Date(value);
+    const now = new Date();
+    const diffMs = now.getTime() - date.getTime();
+    const diffMins = Math.floor(diffMs / 60000);
+
+    if (diffMins < 1) return 'just now';
+    if (diffMins < 60) return \`\${diffMins} minute\${diffMins === 1 ? '' : 's'} ago\`;
+
+    const diffHours = Math.floor(diffMins / 60);
+    if (diffHours < 24) return \`\${diffHours} hour\${diffHours === 1 ? '' : 's'} ago\`;
+
+    const diffDays = Math.floor(diffHours / 24);
+    if (diffDays < 30) return \`\${diffDays} day\${diffDays === 1 ? '' : 's'} ago\`;
+
+    const diffMonths = Math.floor(diffDays / 30);
+    if (diffMonths < 12) return \`\${diffMonths} month\${diffMonths === 1 ? '' : 's'} ago\`;
+
+    const diffYears = Math.floor(diffMonths / 12);
+    return \`\${diffYears} year\${diffYears === 1 ? '' : 's'} ago\`;
+  }
+}`,
+          testCases: [
+            {
+              input: '"Hello World" | truncate:5',
+              expectedOutput: '"Hello..."',
+              description: 'Truncate text to 5 characters'
+            },
+            {
+              input: 'new Date(Date.now() - 3600000) | timeAgo',
+              expectedOutput: '"1 hour ago"',
+              description: 'Show time ago for 1 hour'
+            }
+          ],
+          hints: [
+            'Use substring() method for truncating text',
+            'Calculate time difference using Date.getTime()',
+            'Handle edge cases with early returns',
+            'Use conditional (ternary) operators for singular/plural'
+          ],
+          guidelines: [
+            'Make pipes pure for performance',
+            'Always check for null/undefined input',
+            'Return meaningful default values',
+            'Use clear variable names'
+          ]
+        }
+      },
+      {
+        id: 'challenge-directive',
+        title: 'Build a Highlight Directive',
+        description: 'Create a custom attribute directive that highlights elements on hover.',
+        difficulty: DifficultyLevel.INTERMEDIATE,
+        estimatedTime: 40,
+        category: ExerciseCategory.COMPONENTS,
+        type: ExerciseType.CODING_CHALLENGE,
+        codingChallenge: {
+          id: 'cc-directive',
+          prompt: `Create a custom directive that highlights elements when you hover over them.
+
+Requirements:
+1. Accept @Input for highlight color (default: yellow)
+2. Change background color on mouseenter
+3. Reset on mouseleave
+4. Support custom colors via attribute binding
+5. Use HostListener for event handling
+
+Usage:
+<p appHighlight>Hover me!</p>
+<p [appHighlight]="'lightblue'">Hover me with custom color!</p>`,
+          starterCode: `import { Directive, ElementRef, HostListener, Input } from '@angular/core';
+
+@Directive({
+  selector: '[appHighlight]',
+  standalone: true
+})
+export class HighlightDirective {
+  // Add your implementation here
+}`,
+          solution: `import { Directive, ElementRef, HostListener, Input } from '@angular/core';
+
+@Directive({
+  selector: '[appHighlight]',
+  standalone: true
+})
+export class HighlightDirective {
+  @Input() appHighlight: string = 'yellow';
+  private originalColor: string = '';
+
+  constructor(private el: ElementRef) {
+    this.originalColor = this.el.nativeElement.style.backgroundColor;
+  }
+
+  @HostListener('mouseenter') onMouseEnter() {
+    this.highlight(this.appHighlight);
+  }
+
+  @HostListener('mouseleave') onMouseLeave() {
+    this.highlight(this.originalColor);
+  }
+
+  private highlight(color: string) {
+    this.el.nativeElement.style.backgroundColor = color;
+  }
+}`,
+          testCases: [
+            {
+              input: 'Hover over element',
+              expectedOutput: 'Background changes to yellow',
+              description: 'Default highlight color'
+            },
+            {
+              input: 'Hover with [appHighlight]="lightblue"',
+              expectedOutput: 'Background changes to lightblue',
+              description: 'Custom highlight color'
+            },
+            {
+              input: 'Mouse leave',
+              expectedOutput: 'Background returns to original',
+              description: 'Reset on mouse leave'
+            }
+          ],
+          hints: [
+            'Use ElementRef to access the native DOM element',
+            'Use @HostListener to listen to events',
+            'Store the original color in the constructor',
+            'The @Input name should match the directive selector'
+          ],
+          guidelines: [
+            'Always clean up event listeners',
+            'Use descriptive method names',
+            'Keep directive logic simple and focused',
+            'Consider accessibility'
+          ]
+        }
+      },
+      {
+        id: 'challenge-reactive-search',
+        title: 'Build a Reactive Search Component',
+        description: 'Create a search component with debouncing using RxJS operators.',
+        difficulty: DifficultyLevel.INTERMEDIATE,
+        estimatedTime: 50,
+        category: ExerciseCategory.HTTP,
+        type: ExerciseType.CODING_CHALLENGE,
+        codingChallenge: {
+          id: 'cc-search',
+          prompt: `Build a search component that:
+
+1. Accepts user input in a search box
+2. Debounces input (wait 300ms after user stops typing)
+3. Filters out empty searches
+4. Searches an array of items
+5. Displays results below the search box
+6. Shows loading state while searching
+
+Use RxJS operators: debounceTime, distinctUntilChanged, switchMap, filter
+
+The component should be performant and not search on every keystroke.`,
+          starterCode: `import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { debounceTime, distinctUntilChanged, switchMap, filter } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+
+interface Item {
+  id: number;
+  name: string;
+}
+
+@Component({
+  selector: 'app-reactive-search',
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule],
+  template: \`
+    <div class="search-container">
+      <input
+        [formControl]="searchControl"
+        placeholder="Search items..."
+        type="text"
+      />
+      <div *ngIf="loading">Loading...</div>
+      <ul>
+        <li *ngFor="let item of results">{{ item.name }}</li>
+      </ul>
+    </div>
+  \`
+})
+export class ReactiveSearchComponent implements OnInit {
+  searchControl = new FormControl('');
+  results: Item[] = [];
+  loading = false;
+
+  items: Item[] = [
+    { id: 1, name: 'Angular' },
+    { id: 2, name: 'React' },
+    { id: 3, name: 'Vue' },
+    { id: 4, name: 'Svelte' },
+    { id: 5, name: 'Angular Material' },
+  ];
+
+  ngOnInit(): void {
+    // Implement search logic here
+  }
+
+  searchItems(query: string): Observable<Item[]> {
+    // Simulate API call
+    return of(
+      this.items.filter(item =>
+        item.name.toLowerCase().includes(query.toLowerCase())
+      )
+    );
+  }
+}`,
+          solution: `import { Component, OnInit, OnDestroy } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { debounceTime, distinctUntilChanged, switchMap, filter, tap } from 'rxjs/operators';
+import { Observable, of, Subscription } from 'rxjs';
+
+interface Item {
+  id: number;
+  name: string;
+}
+
+@Component({
+  selector: 'app-reactive-search',
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule],
+  template: \`
+    <div class="search-container">
+      <input
+        [formControl]="searchControl"
+        placeholder="Search items..."
+        type="text"
+      />
+      <div *ngIf="loading">Loading...</div>
+      <ul *ngIf="!loading">
+        <li *ngFor="let item of results">{{ item.name }}</li>
+      </ul>
+      <p *ngIf="!loading && results.length === 0 && searchControl.value">
+        No results found
+      </p>
+    </div>
+  \`
+})
+export class ReactiveSearchComponent implements OnInit, OnDestroy {
+  searchControl = new FormControl('');
+  results: Item[] = [];
+  loading = false;
+  private subscription?: Subscription;
+
+  items: Item[] = [
+    { id: 1, name: 'Angular' },
+    { id: 2, name: 'React' },
+    { id: 3, name: 'Vue' },
+    { id: 4, name: 'Svelte' },
+    { id: 5, name: 'Angular Material' },
+  ];
+
+  ngOnInit(): void {
+    this.subscription = this.searchControl.valueChanges.pipe(
+      debounceTime(300),                    // Wait 300ms after user stops typing
+      distinctUntilChanged(),                // Only if value changed
+      tap(() => this.loading = true),        // Show loading
+      filter(query => query !== null && query.trim().length > 0),  // Filter empty
+      switchMap(query => this.searchItems(query || ''))   // Cancel previous, search new
+    ).subscribe({
+      next: (results) => {
+        this.results = results;
+        this.loading = false;
+      },
+      error: () => {
+        this.loading = false;
+      }
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.subscription?.unsubscribe();
+  }
+
+  searchItems(query: string): Observable<Item[]> {
+    // Simulate API call with delay
+    return of(
+      this.items.filter(item =>
+        item.name.toLowerCase().includes(query.toLowerCase())
+      )
+    );
+  }
+}`,
+          testCases: [
+            {
+              input: 'Type "ang" in search box',
+              expectedOutput: 'Shows "Angular" and "Angular Material" after 300ms',
+              description: 'Debounced search'
+            },
+            {
+              input: 'Type quickly without pausing',
+              expectedOutput: 'Only searches after 300ms pause',
+              description: 'Debouncing prevents excessive searches'
+            },
+            {
+              input: 'Clear search box',
+              expectedOutput: 'No search performed',
+              description: 'Filter empty searches'
+            }
+          ],
+          hints: [
+            'Use valueChanges observable on the FormControl',
+            'Chain operators with pipe()',
+            'Remember to unsubscribe in ngOnDestroy',
+            'Use tap() operator for side effects like setting loading state'
+          ],
+          guidelines: [
+            'Always handle subscriptions properly',
+            'Use switchMap to cancel previous requests',
+            'Provide user feedback during loading',
+            'Filter out empty or invalid inputs'
+          ]
+        }
+      },
+      {
+        id: 'challenge-dynamic-form',
+        title: 'Build a Dynamic Form Generator',
+        description: 'Create a component that generates forms dynamically from a configuration object.',
+        difficulty: DifficultyLevel.ADVANCED,
+        estimatedTime: 75,
+        category: ExerciseCategory.FORMS,
+        type: ExerciseType.CODING_CHALLENGE,
+        codingChallenge: {
+          id: 'cc-dynamic-form',
+          prompt: `Build a dynamic form component that generates form fields from configuration.
+
+Requirements:
+1. Accept a configuration array defining fields
+2. Support field types: text, email, number, select, checkbox
+3. Handle validation rules from config
+4. Display validation errors
+5. Emit form value on valid submission
+
+Configuration format:
+{
+  name: string;
+  type: 'text' | 'email' | 'number' | 'select' | 'checkbox';
+  label: string;
+  validators?: any[];
+  options?: string[]; // for select
+}
+
+This is a common pattern for admin panels and config-driven UIs.`,
+          starterCode: `import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+
+interface FieldConfig {
+  name: string;
+  type: 'text' | 'email' | 'number' | 'select' | 'checkbox';
+  label: string;
+  validators?: any[];
+  options?: string[];
+}
+
+@Component({
+  selector: 'app-dynamic-form',
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule],
+  template: \`
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <!-- Generate form fields here -->
+      <button type="submit" [disabled]="!form.valid">Submit</button>
+    </form>
+  \`
+})
+export class DynamicFormComponent implements OnInit {
+  @Input() fields: FieldConfig[] = [];
+  @Output() formSubmit = new EventEmitter<any>();
+
+  form!: FormGroup;
+
+  constructor(private fb: FormBuilder) {}
+
+  ngOnInit(): void {
+    // Build form dynamically
+  }
+
+  onSubmit(): void {
+    if (this.form.valid) {
+      this.formSubmit.emit(this.form.value);
+    }
+  }
+}`,
+          solution: `import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+
+interface FieldConfig {
+  name: string;
+  type: 'text' | 'email' | 'number' | 'select' | 'checkbox';
+  label: string;
+  validators?: any[];
+  options?: string[];
+}
+
+@Component({
+  selector: 'app-dynamic-form',
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule],
+  template: \`
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="dynamic-form">
+      <div *ngFor="let field of fields" class="form-field">
+        <label [for]="field.name">{{ field.label }}</label>
+
+        <!-- Text/Email/Number inputs -->
+        <input
+          *ngIf="field.type === 'text' || field.type === 'email' || field.type === 'number'"
+          [type]="field.type"
+          [id]="field.name"
+          [formControlName]="field.name"
+          class="form-control"
+        />
+
+        <!-- Select dropdown -->
+        <select
+          *ngIf="field.type === 'select'"
+          [id]="field.name"
+          [formControlName]="field.name"
+          class="form-control"
+        >
+          <option value="">Select...</option>
+          <option *ngFor="let option of field.options" [value]="option">
+            {{ option }}
+          </option>
+        </select>
+
+        <!-- Checkbox -->
+        <input
+          *ngIf="field.type === 'checkbox'"
+          type="checkbox"
+          [id]="field.name"
+          [formControlName]="field.name"
+        />
+
+        <!-- Validation errors -->
+        <div
+          *ngIf="form.get(field.name)?.invalid && form.get(field.name)?.touched"
+          class="error"
+        >
+          <span *ngIf="form.get(field.name)?.hasError('required')">
+            {{ field.label }} is required
+          </span>
+          <span *ngIf="form.get(field.name)?.hasError('email')">
+            Please enter a valid email
+          </span>
+        </div>
+      </div>
+
+      <button type="submit" [disabled]="!form.valid" class="submit-btn">
+        Submit
+      </button>
+    </form>
+  \`,
+  styles: [\`
+    .dynamic-form {
+      max-width: 500px;
+    }
+    .form-field {
+      margin-bottom: 1rem;
+    }
+    .form-field label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+    }
+    .form-control {
+      width: 100%;
+      padding: 0.5rem;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+    .error {
+      color: red;
+      font-size: 0.875rem;
+      margin-top: 0.25rem;
+    }
+    .submit-btn {
+      padding: 0.75rem 1.5rem;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .submit-btn:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+  \`]
+})
+export class DynamicFormComponent implements OnInit {
+  @Input() fields: FieldConfig[] = [];
+  @Output() formSubmit = new EventEmitter<any>();
+
+  form!: FormGroup;
+
+  constructor(private fb: FormBuilder) {}
+
+  ngOnInit(): void {
+    this.buildForm();
+  }
+
+  private buildForm(): void {
+    const group: any = {};
+
+    this.fields.forEach(field => {
+      const validators = field.validators || [];
+      const initialValue = field.type === 'checkbox' ? false : '';
+      group[field.name] = [initialValue, validators];
+    });
+
+    this.form = this.fb.group(group);
+  }
+
+  onSubmit(): void {
+    if (this.form.valid) {
+      this.formSubmit.emit(this.form.value);
+    }
+  }
+}
+
+// Example usage:
+/*
+const formConfig: FieldConfig[] = [
+  {
+    name: 'username',
+    type: 'text',
+    label: 'Username',
+    validators: [Validators.required]
+  },
+  {
+    name: 'email',
+    type: 'email',
+    label: 'Email',
+    validators: [Validators.required, Validators.email]
+  },
+  {
+    name: 'age',
+    type: 'number',
+    label: 'Age',
+    validators: [Validators.required]
+  },
+  {
+    name: 'country',
+    type: 'select',
+    label: 'Country',
+    options: ['USA', 'UK', 'Canada'],
+    validators: [Validators.required]
+  },
+  {
+    name: 'subscribe',
+    type: 'checkbox',
+    label: 'Subscribe to newsletter'
+  }
+];
+*/`,
+          testCases: [
+            {
+              input: 'Config with text field and required validator',
+              expectedOutput: 'Shows required error when empty and touched',
+              description: 'Field validation'
+            },
+            {
+              input: 'Config with select field and options',
+              expectedOutput: 'Renders dropdown with all options',
+              description: 'Select field rendering'
+            },
+            {
+              input: 'Submit valid form',
+              expectedOutput: 'Emits formSubmit event with form values',
+              description: 'Form submission'
+            }
+          ],
+          hints: [
+            'Use FormBuilder.group() to create the form',
+            'Iterate over fields to build the control config',
+            'Use *ngFor with *ngIf to render different field types',
+            'Access form controls with form.get(fieldName)'
+          ],
+          guidelines: [
+            'Keep the component reusable and generic',
+            'Handle all field types consistently',
+            'Provide clear validation messages',
+            'Make the component type-safe'
+          ]
+        }
       }
     ];
   }

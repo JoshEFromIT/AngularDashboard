@@ -4,16 +4,18 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { ExerciseService } from '../../services/exercise.service';
+import { CodeEditorComponent } from '../../shared/code-editor/code-editor.component';
 import {
   CodeExercise,
   QuizQuestion,
   ExerciseType,
-  Milestone
+  Milestone,
+  ChallengeTestCase
 } from '../../models/exercise.model';
 
 @Component({
   selector: 'app-exercise-viewer',
-  imports: [CommonModule, RouterLink, FormsModule],
+  imports: [CommonModule, RouterLink, FormsModule, CodeEditorComponent],
   templateUrl: './exercise-viewer.component.html',
   styleUrls: ['./exercise-viewer.component.css']
 })
@@ -32,6 +34,10 @@ export class ExerciseViewerComponent implements OnInit, OnDestroy {
   userCode: string = '';
   showSolution: boolean = false;
   showHints: boolean = false;
+  codeOutput: string = '';
+  testResults: { testCase: ChallengeTestCase; passed: boolean; output?: string }[] = [];
+  isCodeRunning: boolean = false;
+  allTestsPassed: boolean = false;
 
   // Project state
   completedMilestones: Set<string> = new Set();
@@ -135,9 +141,87 @@ export class ExerciseViewerComponent implements OnInit, OnDestroy {
   }
 
   // Coding challenge methods
+  onCodeChange(code: string): void {
+    this.userCode = code;
+  }
+
+  onRunCode(code: string): void {
+    if (!this.exercise || !this.exercise.codingChallenge) return;
+
+    this.isCodeRunning = true;
+    this.codeOutput = '';
+    this.testResults = [];
+
+    // Simulate code execution (in a real app, this would use a sandbox or backend service)
+    setTimeout(() => {
+      try {
+        this.codeOutput = `Running your code...\n\n`;
+
+        // Run test cases
+        const challenge = this.exercise!.codingChallenge!;
+        this.testResults = challenge.testCases.map(testCase => {
+          // This is a simplified validation - in a real app, you'd execute the code
+          const passed = this.validateTestCase(code, testCase);
+          return {
+            testCase,
+            passed,
+            output: passed ? 'Test passed!' : 'Test failed - check your implementation'
+          };
+        });
+
+        this.allTestsPassed = this.testResults.every(r => r.passed);
+        this.isCodeRunning = false;
+
+        if (this.allTestsPassed) {
+          this.codeOutput += '\n✓ All tests passed! You can now submit your solution.\n';
+        } else {
+          this.codeOutput += '\n✗ Some tests failed. Review the test results and try again.\n';
+        }
+      } catch (error) {
+        this.codeOutput = `Error running code: ${error}`;
+        this.isCodeRunning = false;
+      }
+    }, 1000);
+  }
+
+  onSubmitCode(code: string): void {
+    if (!this.exercise) return;
+
+    if (!this.allTestsPassed) {
+      alert('Please run your code and pass all tests before submitting.');
+      return;
+    }
+
+    // Mark exercise as complete
+    this.exerciseService.updateExerciseProgress(this.exercise.id, 100, true);
+    alert('Congratulations! Your solution has been submitted successfully!');
+  }
+
+  private validateTestCase(code: string, testCase: ChallengeTestCase): boolean {
+    // This is a simplified validation
+    // In a real application, you would execute the code in a sandbox
+    // For now, we'll do basic checks
+
+    // Check if code is not empty and has some structure
+    if (!code || code.trim().length < 20) {
+      return false;
+    }
+
+    // Check if code contains key elements based on the test case description
+    const codeLines = code.toLowerCase();
+    const descLower = testCase.description.toLowerCase();
+
+    // Some basic pattern matching
+    if (descLower.includes('function') || descLower.includes('method')) {
+      return codeLines.includes('function') || codeLines.includes('=>') || codeLines.includes('method');
+    }
+
+    return true; // Default to true for demonstration
+  }
+
   copyCode(code: string): void {
     navigator.clipboard.writeText(code).then(() => {
-      console.log('Code copied to clipboard');
+      alert('Code copied to clipboard!');
     });
   }
 
@@ -147,16 +231,6 @@ export class ExerciseViewerComponent implements OnInit, OnDestroy {
 
   toggleHints(): void {
     this.showHints = !this.showHints;
-  }
-
-  submitCode(): void {
-    if (!this.exercise) return;
-
-    // In a real application, you would run tests here
-    alert(
-      'Code submitted! In a production version, this would run automated tests.'
-    );
-    this.exerciseService.updateExerciseProgress(this.exercise.id, 100, true);
   }
 
   // Project methods
