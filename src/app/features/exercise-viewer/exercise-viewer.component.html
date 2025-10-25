@@ -1,0 +1,258 @@
+<div class="exercise-viewer-container">
+  <div *ngIf="loading" class="loading">
+    <div class="spinner"></div>
+    <p>Loading exercise...</p>
+  </div>
+
+  <div *ngIf="error" class="error-message">
+    <h2>Error</h2>
+    <p>{{ error }}</p>
+    <a routerLink="/exercises" class="back-link">← Back to Exercises</a>
+  </div>
+
+  <div *ngIf="exercise && !loading && !error" class="exercise-content">
+    <!-- Exercise Header -->
+    <div class="exercise-header">
+      <a routerLink="/exercises" class="back-link">← Back to Exercises</a>
+      <h1>{{ exercise.title }}</h1>
+      <p class="exercise-description">{{ exercise.description }}</p>
+
+      <div class="exercise-info">
+        <span class="info-badge">{{ exercise.type }}</span>
+        <span class="info-badge">{{ exercise.category }}</span>
+        <span class="info-badge">{{ exercise.difficulty }}</span>
+        <span class="info-badge">⏱️ {{ exercise.estimatedTime }} min</span>
+      </div>
+    </div>
+
+    <!-- QUIZ TYPE -->
+    <div *ngIf="exercise.type === ExerciseType.QUIZ && exercise.quiz" class="quiz-section">
+      <div class="section-header">
+        <h2>📝 Quiz</h2>
+        <p>Answer all questions to test your knowledge. Passing score: {{ exercise.quiz.passingScore }}%</p>
+      </div>
+
+      <div *ngIf="!quizSubmitted">
+        <div *ngFor="let question of exercise.quiz.questions; let i = index" class="quiz-question">
+          <div class="question-header">
+            <span class="question-number">Question {{ i + 1 }}</span>
+            <span class="question-type">{{ question.type }}</span>
+          </div>
+
+          <p class="question-text">{{ question.question }}</p>
+
+          <pre *ngIf="question.code" class="question-code"><code>{{ question.code }}</code></pre>
+
+          <div class="answer-options">
+            <div
+              *ngFor="let option of question.options"
+              class="answer-option"
+              [class.selected]="isAnswerSelected(question.id, option)"
+              (click)="selectAnswer(question.id, option)"
+            >
+              <input
+                type="radio"
+                [name]="question.id"
+                [value]="option"
+                [checked]="isAnswerSelected(question.id, option)"
+              />
+              <label>{{ option }}</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-actions">
+          <button
+            (click)="submitQuiz()"
+            class="submit-btn"
+            [disabled]="quizAnswers.size !== exercise.quiz.questions.length"
+          >
+            Submit Quiz
+          </button>
+        </div>
+      </div>
+
+      <!-- Quiz Results -->
+      <div *ngIf="quizSubmitted" class="quiz-results">
+        <div class="results-header" [class.passed]="quizScore >= exercise.quiz.passingScore">
+          <h3>
+            {{ quizScore >= exercise.quiz.passingScore ? '🎉 Passed!' : '😔 Not Passed' }}
+          </h3>
+          <p class="score">Score: {{ quizScore }}%</p>
+        </div>
+
+        <div *ngFor="let question of exercise.quiz.questions; let i = index" class="result-question">
+          <div class="question-result" [ngClass]="getQuestionResult(question)">
+            <h4>Question {{ i + 1 }}</h4>
+            <p>{{ question.question }}</p>
+            <p class="your-answer">Your answer: {{ quizAnswers.get(question.id) }}</p>
+            <p class="correct-answer">Correct answer: {{ question.correctAnswer }}</p>
+            <div class="explanation">
+              <strong>Explanation:</strong> {{ question.explanation }}
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-actions">
+          <button (click)="resetQuiz()" class="retry-btn">Try Again</button>
+          <a routerLink="/exercises" class="back-btn">Back to Exercises</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- CODING CHALLENGE TYPE -->
+    <div *ngIf="exercise.type === ExerciseType.CODING_CHALLENGE && exercise.codingChallenge" class="challenge-section">
+      <div class="section-header">
+        <h2>💻 Coding Challenge</h2>
+      </div>
+
+      <div class="challenge-prompt">
+        <h3>Challenge</h3>
+        <pre class="prompt-text">{{ exercise.codingChallenge.prompt }}</pre>
+      </div>
+
+      <div class="challenge-guidelines" *ngIf="exercise.codingChallenge.guidelines">
+        <h3>Guidelines</h3>
+        <ul>
+          <li *ngFor="let guideline of exercise.codingChallenge.guidelines">{{ guideline }}</li>
+        </ul>
+      </div>
+
+      <div class="code-editor">
+        <div class="code-header">
+          <span>Your Code</span>
+          <div class="code-actions">
+            <button (click)="copyCode(userCode)" class="icon-btn">📋 Copy</button>
+            <button (click)="toggleHints()" class="icon-btn">💡 Hints</button>
+            <button (click)="toggleSolution()" class="icon-btn">👁️ Solution</button>
+          </div>
+        </div>
+        <textarea
+          [(ngModel)]="userCode"
+          class="code-textarea"
+          rows="20"
+          spellcheck="false"
+        ></textarea>
+      </div>
+
+      <div *ngIf="showHints && exercise.codingChallenge.hints" class="hints-section">
+        <h3>💡 Hints</h3>
+        <ul>
+          <li *ngFor="let hint of exercise.codingChallenge.hints">{{ hint }}</li>
+        </ul>
+      </div>
+
+      <div *ngIf="showSolution" class="solution-section">
+        <h3>👁️ Solution</h3>
+        <pre class="code-block"><code>{{ exercise.codingChallenge.solution }}</code></pre>
+      </div>
+
+      <div class="test-cases" *ngIf="exercise.codingChallenge.testCases">
+        <h3>Test Cases</h3>
+        <div *ngFor="let testCase of exercise.codingChallenge.testCases" class="test-case">
+          <p class="test-description">{{ testCase.description }}</p>
+          <p><strong>Input:</strong> {{ testCase.input }}</p>
+          <p><strong>Expected:</strong> {{ testCase.expectedOutput }}</p>
+        </div>
+      </div>
+
+      <div class="challenge-actions">
+        <button (click)="submitCode()" class="submit-btn">Submit Code</button>
+      </div>
+    </div>
+
+    <!-- PROJECT ASSIGNMENT TYPE -->
+    <div *ngIf="exercise.type === ExerciseType.PROJECT_ASSIGNMENT && exercise.projectAssignment" class="project-section">
+      <div class="section-header">
+        <h2>🚀 Project Assignment</h2>
+      </div>
+
+      <div class="project-brief">
+        <h3>Project Brief</h3>
+        <p>{{ exercise.projectAssignment.brief }}</p>
+      </div>
+
+      <div class="project-requirements">
+        <h3>Requirements</h3>
+        <ul class="requirements-list">
+          <li *ngFor="let req of exercise.projectAssignment.requirements">{{ req }}</li>
+        </ul>
+      </div>
+
+      <div class="user-stories">
+        <h3>User Stories</h3>
+        <ul class="stories-list">
+          <li *ngFor="let story of exercise.projectAssignment.userStories">{{ story }}</li>
+        </ul>
+      </div>
+
+      <div class="technical-specs">
+        <h3>Technical Specifications</h3>
+        <ul>
+          <li *ngFor="let spec of exercise.projectAssignment.technicalSpecs">{{ spec }}</li>
+        </ul>
+      </div>
+
+      <div class="milestones">
+        <h3>Milestones</h3>
+        <div class="progress-bar-container">
+          <div class="progress-bar">
+            <div class="progress-fill" [style.width.%]="getMilestoneProgress()"></div>
+          </div>
+          <span class="progress-text">{{ getMilestoneProgress() }}% Complete</span>
+        </div>
+
+        <div *ngFor="let milestone of exercise.projectAssignment.milestones" class="milestone">
+          <div class="milestone-header" (click)="toggleMilestone(milestone.id)">
+            <input
+              type="checkbox"
+              [checked]="isMilestoneCompleted(milestone.id)"
+              (click)="$event.stopPropagation()"
+            />
+            <h4>{{ milestone.title }} <span class="time-estimate">({{ milestone.estimatedTime }} min)</span></h4>
+          </div>
+          <p class="milestone-description">{{ milestone.description }}</p>
+          <ul class="milestone-tasks">
+            <li *ngFor="let task of milestone.tasks">{{ task }}</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="resources" *ngIf="exercise.projectAssignment.resources">
+        <h3>Resources</h3>
+        <div class="resource-list">
+          <a
+            *ngFor="let resource of exercise.projectAssignment.resources"
+            [href]="resource.url"
+            target="_blank"
+            class="resource-link"
+          >
+            <span class="resource-type">{{ resource.type }}</span>
+            {{ resource.title }}
+          </a>
+        </div>
+      </div>
+
+      <div class="project-actions">
+        <button (click)="completeProject()" class="submit-btn">Complete Project</button>
+      </div>
+    </div>
+
+    <!-- Knowledge Checks -->
+    <div *ngIf="exercise.knowledgeChecks && exercise.knowledgeChecks.length > 0" class="knowledge-checks">
+      <h3>🧠 Knowledge Checks</h3>
+      <div *ngFor="let check of exercise.knowledgeChecks; let i = index" class="knowledge-check" [id]="'kc-' + i">
+        <div class="kc-header" (click)="toggleKnowledgeCheck(i)">
+          <span class="importance-badge" [class]="'importance-' + check.importance">
+            {{ check.importance }}
+          </span>
+          <h4>{{ check.concept }}</h4>
+        </div>
+        <details>
+          <summary>{{ check.question }}</summary>
+          <p class="kc-answer">{{ check.answer }}</p>
+        </details>
+      </div>
+    </div>
+  </div>
+</div>

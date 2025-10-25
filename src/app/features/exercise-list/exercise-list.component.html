@@ -1,0 +1,138 @@
+<div class="exercise-list-container">
+  <header class="exercise-header">
+    <h1>Code Exercises & Challenges</h1>
+    <p>Test your knowledge and build real projects with guided exercises</p>
+  </header>
+
+  <div class="filters">
+    <div class="search-box">
+      <input
+        type="text"
+        [(ngModel)]="searchQuery"
+        (ngModelChange)="onFilterChange()"
+        placeholder="Search exercises..."
+        class="search-input"
+      />
+    </div>
+
+    <div class="filter-controls">
+      <div class="filter-group">
+        <label for="type">Type:</label>
+        <select
+          id="type"
+          [(ngModel)]="selectedType"
+          (ngModelChange)="onFilterChange()"
+          class="filter-select"
+        >
+          <option value="all">All Types</option>
+          <option *ngFor="let type of types" [value]="type">
+            {{ type }}
+          </option>
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <label for="category">Category:</label>
+        <select
+          id="category"
+          [(ngModel)]="selectedCategory"
+          (ngModelChange)="onFilterChange()"
+          class="filter-select"
+        >
+          <option value="all">All Categories</option>
+          <option *ngFor="let category of categories" [value]="category">
+            {{ category }}
+          </option>
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <label for="difficulty">Difficulty:</label>
+        <select
+          id="difficulty"
+          [(ngModel)]="selectedDifficulty"
+          (ngModelChange)="onFilterChange()"
+          class="filter-select"
+        >
+          <option value="all">All Levels</option>
+          <option *ngFor="let difficulty of difficulties" [value]="difficulty">
+            {{ difficulty }}
+          </option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="exercises-grid">
+    <div
+      *ngFor="let exercise of filteredExercises"
+      class="exercise-card"
+      [class.completed]="isExerciseCompleted(exercise.id)"
+    >
+      <div class="exercise-card-header">
+        <div class="type-icon" [ngClass]="getTypeClass(exercise.type)">
+          {{ getTypeIcon(exercise.type) }}
+        </div>
+        <div class="header-content">
+          <h2>{{ exercise.title }}</h2>
+          <div class="badges">
+            <span
+              class="difficulty-badge"
+              [ngClass]="getDifficultyClass(exercise.difficulty)"
+            >
+              {{ exercise.difficulty }}
+            </span>
+            <span class="type-badge" [ngClass]="getTypeClass(exercise.type)">
+              {{ exercise.type }}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <p class="exercise-description">{{ exercise.description }}</p>
+
+      <div class="exercise-meta">
+        <span class="meta-item">
+          <span class="icon">📚</span>
+          {{ exercise.category }}
+        </span>
+        <span class="meta-item">
+          <span class="icon">⏱️</span>
+          {{ exercise.estimatedTime }} min
+        </span>
+        <span *ngIf="exercise.quiz" class="meta-item">
+          <span class="icon">❓</span>
+          {{ exercise.quiz.questions.length }} questions
+        </span>
+      </div>
+
+      <div *ngIf="exercise.prerequisites && exercise.prerequisites.length > 0" class="prerequisites">
+        <strong>Prerequisites:</strong>
+        <ul>
+          <li *ngFor="let prereq of exercise.prerequisites">{{ prereq }}</li>
+        </ul>
+      </div>
+
+      <div class="exercise-footer">
+        <a
+          [routerLink]="['/exercise', exercise.id]"
+          class="start-btn"
+          [class.completed-btn]="isExerciseCompleted(exercise.id)"
+        >
+          <span *ngIf="!isExerciseCompleted(exercise.id)">Start Exercise</span>
+          <span *ngIf="isExerciseCompleted(exercise.id)">✓ Review</span>
+        </a>
+      </div>
+    </div>
+
+    <div *ngIf="filteredExercises.length === 0" class="no-results">
+      <p>No exercises found matching your criteria.</p>
+      <button
+        (click)="selectedCategory = 'all'; selectedDifficulty = 'all'; selectedType = 'all'; searchQuery = ''; applyFilters()"
+        class="reset-btn"
+      >
+        Reset Filters
+      </button>
+    </div>
+  </div>
+</div>
